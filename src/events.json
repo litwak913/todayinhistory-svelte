@@ -1,0 +1,22 @@
+{
+    "events":[
+        {
+            "title": "Test",
+            "image": "/hunluan.png",
+            "date": "1970-01-01",
+            "type": "meme"
+        },
+        {
+            "title": "Test2",
+            "image": "/hunluan.png",
+            "date": "1970-01-01",
+            "type": "anime"
+        },
+        {
+            "title": "Test3",
+            "image": "/hunluan.png",
+            "date": "1970-01-01",
+            "type": "meme"
+        }
+    ]
+}
