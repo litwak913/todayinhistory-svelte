@@ -4,7 +4,7 @@
 	let meme: boolean = true;
 	let promise = getEventJson();
 	async function getEventJson(): Promise<HistoryEventList> {
-		const res = await fetch("/build/events.json");
+		const res = await fetch("/todayinhistory-svelte/build/events.json");
 		const text = await res.text();
 		if (res.ok) {
 			return JSON.parse(text);

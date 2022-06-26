@@ -6,7 +6,7 @@
 
 <p>{date}</p>
 <p>{title}</p>
-<img src="{img}" alt="{title}"/>
+<img src="/todayinhistory-svelte/imgs/{img}" alt="{title}"/>
 
 <style>
     p {
