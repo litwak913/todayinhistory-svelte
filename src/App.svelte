@@ -1,9 +1,17 @@
 <script lang="ts">
-	import * as eventList from "./events.json";
 	import EventCard from "./EventCard.svelte";
 	let anime: boolean = true;
 	let meme: boolean = true;
-	console.log(eventList);
+	let promise = getEventJson();
+	async function getEventJson(): Promise<HistoryEventList> {
+		const res = await fetch("/build/events.json");
+		const text = await res.text();
+		if (res.ok) {
+			return JSON.parse(text);
+		} else {
+			throw new Error("Error");
+		}
+	}
 </script>
 
 <main>
@@ -13,6 +21,7 @@
 			style="color:pink;"
 			alt="项目地址">项目地址</a
 		>
+
 		<div class="select">
 			<label class="border anime">
 				<input type="checkbox" bind:checked={anime} />
@@ -24,29 +33,35 @@
 			</label>
 		</div>
 	</header>
-	{#each eventList.events as event}
-		{#if event.type == "anime"}
-			{#if anime}
-				<div class="event anime">
-					<EventCard
-						title={event.title}
-						date={event.date}
-						img={event.image}
-					/>
-				</div>
+	{#await promise}
+		<p>loading...</p>
+	{:then events}
+		{#each events.events as event}
+			{#if event.eventType == "anime"}
+				{#if anime}
+					<div class="event anime">
+						<EventCard
+							title={event.title}
+							date={event.date}
+							img={event.image}
+						/>
+					</div>
+				{/if}
+			{:else if event.eventType == "meme"}
+				{#if meme}
+					<div class="event meme">
+						<EventCard
+							title={event.title}
+							date={event.date}
+							img={event.image}
+						/>
+					</div>
+				{/if}
 			{/if}
-		{:else if event.type == "meme"}
-			{#if meme}
-				<div class="event meme">
-					<EventCard
-						title={event.title}
-						date={event.date}
-						img={event.image}
-					/>
-				</div>
-			{/if}
-		{/if}
-	{/each}
+		{/each}
+	{:catch error}
+		<p>{error.message}</p>
+	{/await}
 </main>
 
 <style>
